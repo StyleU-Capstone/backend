@@ -22,5 +22,5 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no root@31.128.51.100 "
             cd ~/backend && git pull &&
-            docker-compose -f docker-compose.yml up -d --build
+            docker-compose -f docker-compose.yaml up -d --build
           "
