@@ -1,4 +1,4 @@
-name: Deploy Backend & Frontend
+name: Deploy Backend
 
 on:
   push:
@@ -10,24 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_KEY }}
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      - name: Deploy to server
-        run: |
-          ssh -o StrictHostKeyChecking=no root@31.128.51.100 << 'EOF'
-            cd /root/backend || exit 1
-            git fetch --all
-            git reset --hard origin/main
-
-            docker-compose pull
-
-            docker-compose up -d --remove-orphans
-
-            docker image prune -f
-          EOF
+    - name: Deploy to server
+      run: |
+        ssh -o StrictHostKeyChecking=no root@31.128.51.100 "
+          cd /root/backend || exit
+          git fetch --all
+          git reset --hard origin/main
+          docker compose build backend
+          docker compose up -d backend
+        "
