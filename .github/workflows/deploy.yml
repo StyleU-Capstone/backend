@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Backend & Frontend
 
 on:
   push:
@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
@@ -20,7 +20,14 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no root@31.128.51.100 "
-            cd ~/backend && git pull &&
-            docker-compose -f docker-compose.yaml up -d --build
-          "
+          ssh -o StrictHostKeyChecking=no root@31.128.51.100 << 'EOF'
+            cd /root/backend || exit 1
+            git fetch --all
+            git reset --hard origin/main
+
+            docker-compose pull
+
+            docker-compose up -d --remove-orphans
+
+            docker image prune -f
+          EOF
