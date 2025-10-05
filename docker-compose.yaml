@@ -13,7 +13,8 @@ services:
     networks:
       - internal
     volumes:
-      - shared_tmp:/tmp
+      - shared_tmp:/app/tmp
+
 
   db:
     image: postgres:14
@@ -45,4 +46,4 @@ networks:
 volumes:
   postgres_data:
   mongo_data:
-  shared_tmp:
+  shared_tmp:   # обязательно объявляем здесь
