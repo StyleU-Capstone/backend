@@ -46,4 +46,4 @@ networks:
 volumes:
   postgres_data:
   mongo_data:
-  shared_tmp:   # обязательно объявляем здесь
+  shared_tmp:

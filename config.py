@@ -23,3 +23,5 @@ DATABASE_URL=f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POS
 MONGO_URL="mongodb://mongo:27017"
 SECRET_KEY = os.getenv("SECRET_KEY")
 MONGO_DB = os.getenv("MONGO_DB")
+
+SHARED_TMP_DIR = "/app/tmp"
