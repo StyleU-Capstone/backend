@@ -16,7 +16,7 @@ class OutfitRequest(BaseModel):
     size: str = Field(...)
     price_min: str = Field(...)
     price_max: str = Field(...)
-    extra_info: str = Field(...)
+    extra_info: Optional[str] = Field(default="")
     style: str = Field(...)
 
 
