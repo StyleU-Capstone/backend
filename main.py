@@ -25,6 +25,7 @@ from fastapi.responses import JSONResponse
 from authorization.dependencies import get_current_user, get_current_user_optional
 from authorization.routes import router as auth_router
 from databases.relational_db import init_models
+from services.llm_connector import start_llm_worker
 from services.outfit_service import (
     add_favorite_outfit,
     get_favorite_outfits,
@@ -58,6 +59,11 @@ async def lifespan(app: FastAPI):
     print("🚀 Initializing database...")
     await init_models()
     print("✅ Database initialized")
+
+    print("⚙️ Starting LLM worker...")
+    await start_llm_worker()
+    print("✅ LLM worker started")
+
     yield
     print("🛑 App shutdown")
 
