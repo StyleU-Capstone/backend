@@ -15,7 +15,7 @@ async def register(user_in: UserCreate):
         async with DatabaseConnector() as connector:
             user = await connector.register_user(user_in.username, user_in.password)
             return {"access_token": create_access_token({"sub": user.username})}
-    except ValueError as e:
+    except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 
