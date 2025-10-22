@@ -10,9 +10,8 @@ PREDICT_BODY_TYPE_ML_URL = "http://ml:8000/predict_body_type"
 PREDICT_BODY_TYPE_LLM_URL = f"{LLM_HOST}/recommend" # для работы на сервере, перед отправкой на гит раскоментируй эту строку
 
 
-PREDICT_COLOR_TYPE_URL = "http://ml:8000/predict_color_type"
-# PREDICT_COLOR_TYPE_LLM_URL = "http://llm:8001/recommend_by_color_type" # для локального запуска и запуска в докере
-PREDICT_COLOR_TYPE_LLM_URL = f"{LLM_HOST}/recommend_by_color_type" # для работы на сервере, перед отправкой на гит раскоментируй эту строку
+PREDICT_COLOR_TYPE_URL = "http://ml:8000/predict_colortype"
+PREDICT_COLOR_TYPE_LLM_URL = "http://llm:8001/recommend_by_color_type"
 
 PARSER_URL = "http://parser:8002/parser"
 
@@ -24,3 +23,5 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 MONGO_DB = os.getenv("MONGO_DB")
 
 SHARED_TMP_DIR = "/app/tmp"
+
+LLM_RATE_LIMIT = 30

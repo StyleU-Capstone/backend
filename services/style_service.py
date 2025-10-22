@@ -12,6 +12,7 @@ from config import (
     PREDICT_COLOR_TYPE_URL,
 )
 from databases.database_connector import DatabaseConnector
+from services.llm_connector import send_llm_request
 
 
 async def analyze_body_type(sex, height, bust, waist, hips, username=None):
@@ -22,10 +23,11 @@ async def analyze_body_type(sex, height, bust, waist, hips, username=None):
             })
             ml_response.raise_for_status()
             body_type = ml_response.json()["body_type"]
+            if not body_type:
+                raise HTTPException(status_code=500, detail="ML-service returned empty body_type")
 
-            llm_response = await client.post(PREDICT_BODY_TYPE_LLM_URL, json={"body_type": body_type, "sex": sex})
-            llm_response.raise_for_status()
-            recommendation = llm_response.json()
+            llm_response = await send_llm_request(PREDICT_BODY_TYPE_LLM_URL, {"body_type": body_type, "sex": sex})
+            recommendation = llm_response
 
         if username:
             async with DatabaseConnector() as connector:
@@ -65,9 +67,8 @@ async def analyze_color_type(file: UploadFile, username=None):
             if not color_type:
                 raise HTTPException(status_code=500, detail="ML-service returned empty color_type")
 
-            llm_response = await client.post(PREDICT_COLOR_TYPE_LLM_URL, json={"color_type": color_type})
-            llm_response.raise_for_status()
-            recommendation = llm_response.json()
+            llm_response = await send_llm_request(PREDICT_COLOR_TYPE_LLM_URL, {"color_type": color_type})
+            recommendation = llm_response
 
         if username:
             file.file.seek(0)
