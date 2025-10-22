@@ -11,7 +11,9 @@ PREDICT_BODY_TYPE_LLM_URL = f"{LLM_HOST}/recommend" # для работы на �
 
 
 PREDICT_COLOR_TYPE_URL = "http://ml:8000/predict_colortype"
-PREDICT_COLOR_TYPE_LLM_URL = "http://llm:8001/recommend_by_color_type"
+# PREDICT_COLOR_TYPE_LLM_URL = "http://llm:8001/recommend_by_color_type" # для локального запуска и запуска в докере
+PREDICT_COLOR_TYPE_LLM_URL = f"{LLM_HOST}/recommend_by_color_type" # для работы на сервере, перед отправкой на гит раскоментируй эту строку
+
 
 PARSER_URL = "http://parser:8002/parser"
 
